@@ -11,22 +11,22 @@ When supplied an artistID, will return artist information.
 ## POST
 
 ```
-/artists/newArtist
+/artists
 ```
 
 Will create a new artist with the provided data.
 ## PUT
 
 ```
-/artists/:artistID/edit
+/artists/:artistID/
 ```
 
-When supplied an artistID, will update the artist information.
+When supplied an artistID, will create or update the artist information.
 
 ## DELETE
 
 ```
-/artists/:artistID/delete
+/artists/:artistID/
 ```
 
 When supplied an artistID, will delete the artist and their associated information.
