@@ -1,29 +1,32 @@
-#CRUD
-##GET
+# CRUD
+
+## GET
 
 ```
-"/artists/:artistID"
+/artists/:artistID
 ```
 
-When supplied an artistID, will return artist information
-##POST
+When supplied an artistID, will return artist information.
+
+## POST
 
 ```
-"/artists/newArtist"
+/artists/newArtist
 ```
 
 Will create a new artist with the provided data.
-##PUT
+## PUT
 
 ```
-"/artists/:artistID/edit"
+/artists/:artistID/edit
 ```
 
 When supplied an artistID, will update the artist information.
-##DELETE
+
+## DELETE
 
 ```
-"/artists/:artistID/delete"
+/artists/:artistID/delete
 ```
 
 When supplied an artistID, will delete the artist and their associated information.
