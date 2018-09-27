@@ -54,13 +54,13 @@ app.get("/artists/:artistID", (req, res) => {
       .send({ ERROR: "artistID parameter accepts numbers between 1 and 100" });
   }
 });
-app.post("/artists/:artistID/newArtist", (req, res) => {
+app.post("/artists", (req, res) => {
   res.status(400).send({ ERROR: "does not accept post request" });
 });
-app.put("/artists/:artistID/edit", (req, res) => {
+app.put("/artists/:artistID", (req, res) => {
   res.status(202).send(/*TODO*/);
 });
-app.delete("/artists/:artistID/delete", (req, res) => {
+app.delete("/artists/:artistID", (req, res) => {
   res.status(200).send(/*TODO*/);
 });
 
