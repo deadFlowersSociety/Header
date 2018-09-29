@@ -1,14 +1,66 @@
-const cassandra = require("cassandra-driver");
-const client = new cassandra.Client({
-  contactPoints: ["127.0.0.1:9042"],
-  keyspace: "spotify"
+var ExpressCassandra = require("express-cassandra");
+var models = ExpressCassandra.createClient({
+  clientOptions: {
+    contactPoints: ["127.0.0.1"],
+    protocolOptions: { port: 9042 },
+    keyspace: "spotify",
+    queryOptions: { consistency: ExpressCassandra.consistencies.one }
+  },
+  ormOptions: {
+    defaultReplicationStrategy: {
+      class: "SimpleStrategy",
+      replication_factor: 1
+    },
+    migration: "safe"
+  }
 });
 
-const find = callback => {
-  client
-    .execute(`SELECT * from artist`)
-    .then(results => callback(null, results.rows))
-    .catch(err => callback(err, null));
+var Artist = models.loadSchema("Artist", {
+  fields: {
+    artistID: "float",
+    artistName: "text",
+    followed: "boolean",
+    followersNumber: "float",
+    verified: "boolean",
+    artistImages: {
+      type: "frozen",
+      typeDef: "<list<text>>"
+    },
+    Biography: "text",
+    Where: {
+      type: "map",
+      typeDef: "<text, float>"
+    }
+  },
+  key: ["artistID"]
+});
+
+Artist.syncDB(function(err, res) {
+  if (err) {
+    throw err;
+  } else {
+    console.log("connected");
+  }
+});
+
+var insert = artistObj => {
+  var artist = new Artist(artistObj);
+  artist.saveAsync(function(err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  });
 };
 
-module.exports.find = find;
+// models.import(
+//   "/Users/jones/Downloads/Hackreactor/hrsf101-system-design-capstone/Header/database/data/mockDataTest.json",
+//   { batchSize: 10 },
+//   function(err) {
+//     if (err) {
+//       console.log(err);
+//     }
+//   }
+// );
+
+module.exports.insert = insert;

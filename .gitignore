@@ -28,5 +28,6 @@ coverage
 # Compiled (http://nodejs.org/api/addons.html)
 build/
 bundle.js/**
-
+*.json
+*.csv
 
