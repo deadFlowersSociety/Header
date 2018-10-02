@@ -43,14 +43,19 @@ Artist.syncDB(function(err, res) {
   }
 });
 
-var insert = artistObj => {
+var insert = (artistObj, callback) => {
   var artist = new Artist(artistObj);
-  artist.saveAsync(function(err) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-  });
+  artist.saveAsync(callback);
+};
+
+var update = (id, body, callback) => {
+  Artist.update({ artistID: id }, body, callback);
+};
+var remove = (id, callback) => {
+  Artist.delete({ artistID: id }, callback);
+};
+var find = (id, callback) => {
+  Artist.findOne({ artistID: id }, callback);
 };
 
 // models.import(
@@ -63,4 +68,7 @@ var insert = artistObj => {
 //   }
 // );
 
+module.exports.find = find;
+module.exports.update = update;
+module.exports.remove = remove;
 module.exports.insert = insert;
