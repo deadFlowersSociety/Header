@@ -54,11 +54,11 @@ sequelize
 
 Artist.sync();
 
-const insert = artistObj => {
+const insert = (artistObj, callback) => {
   //   Artist.sync().then(() => {
   //     Artist.create(artistObj).catch(err => console.log(err));
   //   });
-  Artist.create(artistObj);
+  Artist.create(artistObj).then(callback);
   //   .catch(err => {
   //     if (err) {
   //       console.log(err);
@@ -66,4 +66,17 @@ const insert = artistObj => {
   //   });
 };
 
+var update = (id, body, callback) => {
+  Artist.update(body, { where: { artistID: id } }).then(callback);
+};
+var remove = (id, callback) => {
+  Artist.destroy({ where: { artistID: id } }).then(callback);
+};
+var find = (id, callback) => {
+  Artist.findOne({ where: { artistID: id } }).then(callback);
+};
+
+module.exports.find = find;
+module.exports.update = update;
+module.exports.remove = remove;
 module.exports.insert = insert;
