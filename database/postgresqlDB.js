@@ -73,7 +73,13 @@ var remove = (id, callback) => {
   Artist.destroy({ where: { artistID: id } }).then(callback);
 };
 var find = (id, callback) => {
-  Artist.findOne({ where: { artistID: id } }).then(callback);
+  Artist.findById(id, { raw: true })
+    .then(data => {
+      callback(null, data);
+    })
+    .catch(err => {
+      if (err) callback(err, null);
+    });
 };
 
 module.exports.find = find;

@@ -34,10 +34,11 @@ app.use(cors());
 const bodyParser = require("body-parser");
 
 //TODO replace HeaderDB with postgres or cassandra
-const HeaderDB = require("../database/index.js");
+const HeaderDB = require("../database/postgresqlDB.js");
 
 app.use(bodyParser.json());
-// app.use(express.static(__dirname + '/../public/dist'));
+app.use(express.static(__dirname + "/../public/dist"));
+// app.use("/:artistID", express.static(__dirname + "../public/dist"));
 
 // Upon GET request to '/artist/:artistID', queries the HeaderDB (mongoDB) and sends back artistObj.
 app.get("/artists/:artistID", (req, res) => {
@@ -45,6 +46,7 @@ app.get("/artists/:artistID", (req, res) => {
   HeaderDB.find(req.params.artistID, (err, results) => {
     if (err) {
       console.log(err);
+      res.sendStatus(404);
     } else {
       res.status(200);
       res.send(results);
@@ -56,6 +58,7 @@ app.post("/artists", (req, res) => {
   HeaderDB.insert(req.body, (err, results) => {
     if (err) {
       console.log(err);
+      res.sendStatus(404);
     } else {
       res.status(201);
       res.send("Inserted " + req.body);
@@ -67,6 +70,7 @@ app.put("/artists/:artistID", (req, res) => {
   HeaderDB.update(req.params.artistID, req.body, (err, results) => {
     if (err) {
       console.log(err);
+      res.sendStatus(404);
     } else {
       res.status(201);
       res.send("Updated " + req.body);
@@ -78,6 +82,7 @@ app.delete("/artists/:artistID", (req, res) => {
   HeaderDB.remove(req.params.artistID, (err, results) => {
     if (err) {
       console.log(err);
+      res.sendStatus(404);
     } else {
       res.status(201);
       res.send("Deleted " + req.body);

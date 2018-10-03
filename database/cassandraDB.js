@@ -39,7 +39,7 @@ Artist.syncDB(function(err, res) {
   if (err) {
     throw err;
   } else {
-    console.log("connected");
+    console.log("connected to cassandra");
   }
 });
 
@@ -49,13 +49,16 @@ var insert = (artistObj, callback) => {
 };
 
 var update = (id, body, callback) => {
+  id = parseInt(id);
   Artist.update({ artistID: id }, body, callback);
 };
 var remove = (id, callback) => {
+  id = parseInt(id);
   Artist.delete({ artistID: id }, callback);
 };
 var find = (id, callback) => {
-  Artist.findOne({ artistID: id }, callback);
+  id = parseInt(id);
+  Artist.findOne({ artistID: id }, { raw: true }, callback);
 };
 
 // models.import(
