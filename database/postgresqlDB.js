@@ -3,14 +3,14 @@ const sequelize = new Sequelize("spotify", "", "", {
   logging: false,
   host: "localhost",
   dialect: "postgres",
-  operatorsAliases: false,
+  operatorsAliases: false
 
-  pool: {
-    max: 50,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
+  // pool: {
+  // max: 90,
+  // min: 0,
+  // acquire: 30000,
+  // idle: 3000
+  // }
 });
 
 const Artist = sequelize.define(
@@ -55,30 +55,40 @@ sequelize
 Artist.sync();
 
 const insert = (artistObj, callback) => {
-  //   Artist.sync().then(() => {
-  //     Artist.create(artistObj).catch(err => console.log(err));
-  //   });
-  Artist.create(artistObj).then(callback);
-  //   .catch(err => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
+  Artist.create(artistObj)
+    .then(data => {
+      callback(null, data);
+    })
+    .catch(err => {
+      callback(err, null);
+    });
 };
 
-var update = (id, body, callback) => {
-  Artist.update(body, { where: { artistID: id } }).then(callback);
+const update = (id, body, callback) => {
+  Artist.update(body, { where: { artistID: id } })
+    .then(data => {
+      callback(null, data);
+    })
+    .catch(err => {
+      callback(err, null);
+    });
 };
-var remove = (id, callback) => {
-  Artist.destroy({ where: { artistID: id } }).then(callback);
+const remove = (id, callback) => {
+  Artist.destroy({ where: { artistID: id } })
+    .then(data => {
+      callback(null, data);
+    })
+    .catch(err => {
+      callback(err, null);
+    });
 };
-var find = (id, callback) => {
+const find = (id, callback) => {
   Artist.findById(id, { raw: true })
     .then(data => {
       callback(null, data);
     })
     .catch(err => {
-      if (err) callback(err, null);
+      callback(err, null);
     });
 };
 
