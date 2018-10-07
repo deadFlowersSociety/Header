@@ -4,7 +4,6 @@ const sequelize = new Sequelize("spotify", "", "", {
   host: "localhost",
   dialect: "postgres",
   operatorsAliases: false
-
   // pool: {
   // max: 90,
   // min: 0,
