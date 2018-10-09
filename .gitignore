@@ -25,6 +25,9 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# New Relic file
+newrelic.js
+
 # Compiled (http://nodejs.org/api/addons.html)
 build/
 bundle.js/**
